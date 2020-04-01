@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import styles from "./App.module.css";
+import { connect } from "react-redux";
 
-function App() {
+import Question from "./components/Question/Question";
+
+type AppProps = {
+  addQuestion: any;
+  questions: [];
+};
+
+type questionElement = { id: number; text: string };
+
+const App: React.FC<AppProps> = ({ addQuestion, questions }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.App}>
+      {questions.map((el: questionElement, id) => (
+        <Question key={id} id={id} text={el.text} />
+      ))}
+      <button className={styles.addQuestionBtn} onClick={addQuestion}>
+        + add question
+      </button>
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state: any) => {
+  return {
+    questions: state.questions
+  };
+};
+
+const mapDispatchToProps = (dispatch: (obj: { type: string }) => any) => {
+  return {
+    addQuestion: () => dispatch({ type: "ADD_QUESTION" })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

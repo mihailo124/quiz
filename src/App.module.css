@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
+  padding: 5rem 0;
+  box-sizing: border-box;
 }
 
 .addQuestionBtn {

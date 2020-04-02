@@ -17,7 +17,15 @@ const App: React.FC<AppProps> = ({ addQuestion, questions }) => {
       {questions.map((el: questionElement, id) => (
         <Question key={id} id={id} text={el.text} />
       ))}
-      <button className={styles.addQuestionBtn} onClick={addQuestion}>
+      <button
+        className={styles.addQuestionBtn}
+        onClick={() => {
+          addQuestion();
+          setTimeout(() => {
+            window.scrollTo(0, 999999);
+          });
+        }}
+      >
         + add question
       </button>
     </div>

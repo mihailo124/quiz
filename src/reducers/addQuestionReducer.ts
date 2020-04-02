@@ -1,4 +1,10 @@
-import { ADD_QUESTION, CHANGE_QUESTION, DELETE_QUESTION } from "../actions";
+import {
+  ADD_QUESTION,
+  CHANGE_QUESTION,
+  DELETE_QUESTION,
+  DELETE_ALL_QUESTIONS
+} from "../actions";
+import generateQuestion from "../utils/randomQuestionGenerator";
 
 const addQuestionReducer = (
   state: Array<any> = [],
@@ -6,7 +12,13 @@ const addQuestionReducer = (
 ) => {
   switch (action.type) {
     case ADD_QUESTION:
-      return [...state, { id: state.length, text: "What's up?" }];
+      return [
+        ...state,
+        {
+          id: state.length > 0 ? state[state.length - 1].id + 1 : 0,
+          text: generateQuestion()
+        }
+      ];
 
     case CHANGE_QUESTION:
       const newState = [...state];
@@ -17,12 +29,13 @@ const addQuestionReducer = (
     case DELETE_QUESTION:
       const updatedState = [...state];
       updatedState.splice(
-        updatedState[state.findIndex(el => el.id === action.payload.id)],
+        state.findIndex(el => el.id === action.payload.id),
         1
       );
-      console.log(updatedState);
-
       return [...updatedState];
+
+    case DELETE_ALL_QUESTIONS:
+      return [];
 
     default:
       return state;

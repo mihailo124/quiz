@@ -2,19 +2,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   flex-direction: column;
   padding: 5rem 0;
   box-sizing: border-box;
+}
+
+.questionsContainer {
+  min-height: calc(100vh - 13.3rem);
+}
+
+.buttonsContainer button:first-child {
+  margin-right: 1rem;
 }
 
 .addQuestionBtn {
   border: 1px solid #fff;
   background-color: transparent;
   color: #fff;
-  padding: 1rem;
   border-radius: 7px;
   cursor: pointer;
+  width: 142px;
+  white-space: nowrap;
+  height: 3.3rem;
 }
 
 .addQuestionBtn:hover {

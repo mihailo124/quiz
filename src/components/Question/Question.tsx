@@ -40,6 +40,7 @@ const Question: React.FC<QuestionProps> = ({
   return (
     <div className={styles.questionContainer}>
       <div className={styles.questionInputWrapper}>
+        <div className={styles.showAnswersButton} >…</div>
         <div className={styles.goBackButton} onClick={() => deleteQuestion(id)}>
           ×
         </div>

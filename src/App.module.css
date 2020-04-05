@@ -9,7 +9,7 @@
 }
 
 .questionsContainer {
-  min-height: calc(100vh - 13.3rem);
+  min-height: calc(var(--vh, 1vh) * 100 - 13.3rem);
 }
 
 .buttonsContainer button:first-child {
@@ -35,4 +35,11 @@
 .addQuestionBtn:active {
   background-color: transparent;
   color: #fff;
+}
+
+.addQuestionBtn:disabled {
+  background-color: rgba(255, 255, 255, 0.137);
+  color: #282c34;
+  border-color: #282c34;
+  cursor: not-allowed;
 }

@@ -3,6 +3,7 @@ import styles from "./App.module.css";
 import { connect } from "react-redux";
 
 import Question from "./components/Question/Question";
+import Modal from "./components/Modal/Modal";
 import { ADD_QUESTION, DELETE_ALL_QUESTIONS } from "./actions";
 
 type AppProps = {
@@ -18,30 +19,39 @@ const App: React.FC<AppProps> = ({
   deleteAllQuestions,
   questions
 }) => {
+  const [modalShow, setModalShow] = useState(true);
+
   return (
-    <div className={styles.App}>
-      <div className={styles.questionsContainer}>
-        {questions.map((el: questionElement) => (
-          <Question key={el.id} id={el.id} text={el.text} />
-        ))}
+    <>
+      <Modal show={modalShow} setModalShow={setModalShow} />
+      <div className={styles.App} onDoubleClick={() => setModalShow(true)}>
+        <div className={styles.questionsContainer}>
+          {questions.map((el: questionElement) => (
+            <Question key={el.id} id={el.id} text={el.text} />
+          ))}
+        </div>
+        <div className={styles.buttonsContainer}>
+          <button
+            className={styles.addQuestionBtn}
+            onClick={() => {
+              setTimeout(() => {
+                window.scrollTo(0, 999999);
+              });
+              addQuestion();
+            }}
+          >
+            + Add Question
+          </button>
+          <button
+            disabled={questions.length === 0}
+            className={styles.addQuestionBtn}
+            onClick={deleteAllQuestions}
+          >
+            Delete All
+          </button>
+        </div>
       </div>
-      <div className={styles.buttonsContainer}>
-        <button
-          className={styles.addQuestionBtn}
-          onClick={() => {
-            addQuestion();
-            setTimeout(() => {
-              window.scrollTo(0, 999999);
-            });
-          }}
-        >
-          + Add Question
-        </button>
-        <button className={styles.addQuestionBtn} onClick={deleteAllQuestions}>
-          Delete All
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

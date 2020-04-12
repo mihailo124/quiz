@@ -2,18 +2,25 @@ import React, { useState, useRef } from "react";
 import styles from "./Question.module.css";
 import { connect } from "react-redux";
 
+import Answers from "../Answers/Answers";
+import dots from "../../assets/photos/dots.png";
+
 type QuestionProps = {
   id: number;
-  changeQuestion: any;
-  deleteQuestion: any;
+  changeQuestion: (id: number, val: any) => void;
+  deleteQuestion: (id: number) => void;
+  enableInput: (id: number) => void;
   text: string;
+  disabled: boolean;
 };
 
 const Question: React.FC<QuestionProps> = ({
   id,
   changeQuestion,
   text,
-  deleteQuestion
+  deleteQuestion,
+  enableInput,
+  disabled,
 }) => {
   const [value, setValue] = useState(text);
   const input = useRef<HTMLInputElement>(null);
@@ -35,22 +42,25 @@ const Question: React.FC<QuestionProps> = ({
     }, 30);
   };
 
-  const onDeleteAnimation = () => {};
+  const onDelete = () => {
+    if (!disabled) enableInput(-1);
+    deleteQuestion(id);
+  };
 
   return (
-    <div className={styles.questionContainer}>
+    <div className={styles.questionContainer} onClick={() => enableInput(id)}>
       <div className={styles.questionInputWrapper}>
-        <div className={styles.showAnswersButton} >…</div>
-        <div className={styles.goBackButton} onClick={() => deleteQuestion(id)}>
+        <div className={styles.goBackButton} onClick={onDelete}>
           ×
         </div>
         <input
+          disabled={disabled}
           ref={input}
           type={"text"}
           value={value}
           className={styles.input}
-          onChange={e => setValue(e.target.value)}
-          onKeyPress={event => enterPressHandler(event)}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyPress={(event) => enterPressHandler(event)}
         />
         <button
           className={styles.button}
@@ -62,13 +72,14 @@ const Question: React.FC<QuestionProps> = ({
           Save
         </button>
       </div>
+      {!disabled ? <Answers /> : null}
     </div>
   );
 };
 
 const mapStateToProps = (state: any) => {
   return {
-    questions: state.questions
+    questions: state.questions,
   };
 };
 
@@ -82,7 +93,7 @@ const mapDispatchToProps = (
     changeQuestion: (id: number, text: string) =>
       dispatch({ type: "CHANGE_QUESTION", payload: { id, text } }),
     deleteQuestion: (id: number) =>
-      dispatch({ type: "DELETE_QUESTION", payload: { id } })
+      dispatch({ type: "DELETE_QUESTION", payload: { id } }),
   };
 };
 

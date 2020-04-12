@@ -17,17 +17,26 @@ type questionElement = { id: number; text: string };
 const App: React.FC<AppProps> = ({
   addQuestion,
   deleteAllQuestions,
-  questions
+  questions,
 }) => {
   const [modalShow, setModalShow] = useState(true);
+  const [enabledQuestion, setEnabledQuestion] = useState(-1);
+
+  const enableInput = (id: number) => setEnabledQuestion(id);
 
   return (
     <>
       <Modal show={modalShow} setModalShow={setModalShow} />
-      <div className={styles.App} onDoubleClick={() => setModalShow(true)}>
+      <div className={styles.App}>
         <div className={styles.questionsContainer}>
           {questions.map((el: questionElement) => (
-            <Question key={el.id} id={el.id} text={el.text} />
+            <Question
+              key={el.id}
+              id={el.id}
+              text={el.text}
+              disabled={el.id !== enabledQuestion}
+              enableInput={enableInput}
+            />
           ))}
         </div>
         <div className={styles.buttonsContainer}>
@@ -49,6 +58,12 @@ const App: React.FC<AppProps> = ({
           >
             Delete All
           </button>
+          <button
+            className={styles.addQuestionBtn}
+            onClick={() => setModalShow(true)}
+          >
+            Show Modal
+          </button>
         </div>
       </div>
     </>
@@ -57,14 +72,14 @@ const App: React.FC<AppProps> = ({
 
 const mapStateToProps = (state: any) => {
   return {
-    questions: state.questions
+    questions: state.questions,
   };
 };
 
 const mapDispatchToProps = (dispatch: (obj: { type: string }) => any) => {
   return {
     addQuestion: () => dispatch({ type: ADD_QUESTION }),
-    deleteAllQuestions: () => dispatch({ type: DELETE_ALL_QUESTIONS })
+    deleteAllQuestions: () => dispatch({ type: DELETE_ALL_QUESTIONS }),
   };
 };
 

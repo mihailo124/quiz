@@ -12,7 +12,7 @@
   min-height: calc(var(--vh, 1vh) * 100 - 13.3rem);
 }
 
-.buttonsContainer button:first-child {
+.buttonsContainer button:not(:last-child) {
   margin-right: 1rem;
 }
 

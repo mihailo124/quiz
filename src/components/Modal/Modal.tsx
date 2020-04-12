@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Modal.module.css";
 import { connect } from "react-redux";
 
@@ -9,6 +9,11 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ show, setModalShow }) => {
   const hideModal = () => setModalShow(false);
+
+  useEffect(() => {
+    if (show) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+  }, [show]);
 
   const modal = useRef<HTMLInputElement>(null);
   const backdrop = useRef<HTMLInputElement>(null);

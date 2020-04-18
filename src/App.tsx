@@ -22,8 +22,6 @@ const App: React.FC<AppProps> = ({
   const [modalShow, setModalShow] = useState(false);
   const [enabledQuestion, setEnabledQuestion] = useState(-1);
 
-  const enableInput = (id: number) => setEnabledQuestion(id);
-
   return (
     <>
       <Modal show={modalShow} setModalShow={setModalShow} />

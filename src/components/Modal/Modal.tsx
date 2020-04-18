@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import styles from "./Modal.module.css";
-import { connect } from "react-redux";
+
 
 type ModalProps = {
   show: boolean;

@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./Question.module.css";
 import { connect } from "react-redux";
 
 import Answers from "../Answers/Answers";
-import dots from "../../assets/photos/dots.png";
 
 type QuestionProps = {
   id: number;

@@ -19,7 +19,7 @@ const App: React.FC<AppProps> = ({
   deleteAllQuestions,
   questions,
 }) => {
-  const [modalShow, setModalShow] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
   const [enabledQuestion, setEnabledQuestion] = useState(-1);
 
   const enableInput = (id: number) => setEnabledQuestion(id);
@@ -35,7 +35,7 @@ const App: React.FC<AppProps> = ({
               id={el.id}
               text={el.text}
               disabled={el.id !== enabledQuestion}
-              enableInput={enableInput}
+              enableInput={setEnabledQuestion}
             />
           ))}
         </div>

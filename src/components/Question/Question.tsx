@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Question.module.css";
 import { connect } from "react-redux";
 
@@ -43,8 +43,8 @@ const Question: React.FC<QuestionProps> = ({
   };
 
   const onDelete = () => {
-    if (!disabled) enableInput(-1);
     deleteQuestion(id);
+    if (!disabled) setTimeout(() => enableInput(-1));
   };
 
   return (
@@ -77,12 +77,6 @@ const Question: React.FC<QuestionProps> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    questions: state.questions,
-  };
-};
-
 const mapDispatchToProps = (
   dispatch: (obj: {
     type: string;
@@ -97,4 +91,4 @@ const mapDispatchToProps = (
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Question);
+export default connect(null, mapDispatchToProps)(Question);
